@@ -1,0 +1,1 @@
+Implemented redux store, reducers, actions to components
