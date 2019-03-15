@@ -1,10 +1,10 @@
 import { createStore } from 'redux';
 import rootReducer from './reducers/index';
-import { pokemons as myPokemons } from './pokemons';
+import { pokemons } from './pokemons';
 
-
+// initial data
 const persistedState = { 
-  pokemons: myPokemons
+	pokemons,
 };
 
 const store = createStore(rootReducer, persistedState);

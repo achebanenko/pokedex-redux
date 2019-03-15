@@ -1,14 +1,14 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 
-import Header from './components/Header';
-import Catalog from './components/Catalog';
-import Single from './components/Single';
-import Cart from './components/Cart';
-import NotFound from './components/NotFound';
-import NotMatched from './components/NotMatched';
+import Header from './Header';
+import Catalog from './Catalog';
+import Single from './Single';
+import Cart from './Cart';
+import NotFound from './NotFound';
+import NotMatched from './NotMatched';
 
-const AppRoutes = () => (
+const App = () => (
   <BrowserRouter>
     <div className="wrapper">
       <Route component={Header} />
@@ -16,11 +16,12 @@ const AppRoutes = () => (
       <Switch>
         <Route exact path="/" component={Catalog} />
         <Route exact path="/type/:type(\w+)" component={Catalog} />
-        <Route exact path="/notfound" component={NotFound} />
-
+        
         <Route exact path="/notmatched" component={NotMatched} />
         <Route exact path="/:name(\w+)" component={Single} />
 
+        { /* 404 */}
+        <Route exact path="/notfound" component={NotFound} />
         <Redirect to="/notfound" component={NotFound} />
       </Switch>
 
@@ -29,4 +30,4 @@ const AppRoutes = () => (
   </BrowserRouter>
 );
 
-export default AppRoutes;
+export default App;

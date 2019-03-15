@@ -1,40 +1,51 @@
-import React from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import List from './List';
+import { filterByType, filterByName } from '../actions';
 
-class Catalog extends React.Component {
+class Catalog extends Component {
 
   componentDidMount() {
-    const { dispatch, match } = this.props;
+    // match is router
+    const { match, filterByType } = this.props;
 
     if (match.params.type) {
+      /*
       dispatch({
         type: 'FILTER_BY_TYPE',
         bytype: match.params.type
       })
+      */
+      filterByType(match.params.type);
     }
   }
 
   render() {
-    const { ui, dispatch } = this.props;
+    const { ui, filterByType, filterByName } = this.props;
 
     const types = ['any','normal','electric','fire','water','grass','bug','fight','psychic','fairy','flying'];
 
-    const renderType = (type) => <li key={type} className={`${ ui.filterType === type || ui.filterType === type ? `${type} selected` : '' }`} onClick={() => {
-      dispatch({
-        type: 'FILTER_BY_TYPE',
-        bytype: type
-      })
-    }}>{type}</li>;
-    
+    const renderType = (type) => (
+      <li
+        key={type} 
+        className={`${ ui.filterType === type || ui.filterType === type ? `${type} selected` : '' }`} 
+        onClick={() => filterByType(type)}
+      >
+        {type}
+      </li>
+    );
+
     return (
-      <div>
+      <Fragment>
         <div className="filterInput">
           <input onChange={(e) => {
+            /*
             dispatch({
-              type: 'FILTER_BY_TEXT',
-              bytext: e.target.value
+              type: 'FILTER_BY_NAME',
+              byname: e.target.value
             })
+            */
+            filterByName(e.target.value);
           }} placeholder="Gotta Catch'em all" />
         </div>
 
@@ -43,9 +54,15 @@ class Catalog extends React.Component {
         </ul>
 
         <List />
-      </div>
+      </Fragment>
     );
   }
 }
 
-export default connect(state => state) (Catalog);
+export default connect(
+  state => state,
+  {
+    filterByType,
+    filterByName,
+  }
+)(Catalog);

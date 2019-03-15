@@ -1,13 +1,8 @@
 const pokemons = (state = [], action) => {
-	return state;
-	/*
 	switch (action.type) {
-		case '':
-			return 
-		default
+		default:
 			return state;
 	}
-	*/
-}
+};
 
 export default pokemons;

@@ -13,9 +13,16 @@ const config = {
     path: path.resolve(__dirname, 'build'),
   },
   devServer: {
+    // Same as: historyApiFallback: true
     historyApiFallback: {
       index: 'index.html'
     },
+    contentBase: path.join(__dirname, 'public/'),
+    // publicPath:
+    /*
+    inline: true,
+    hot: true,
+    */
   },
   module: {
     rules: [

@@ -1,5 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
+import { addToCart } from '../actions';
 
 const AddButtonStyled = styled.div`
 	&.listItem__addButton--active {
@@ -11,18 +13,25 @@ const AddButtonStyled = styled.div`
 
 class AddButton extends React.Component {
 	render() {
-		// const addButtonText = this.props.inCart ? 'Added' : 'Add to Cart';
-		// const addButtonAction = this.props.inCart ? null : () => this.props.addToCart(pokemon.id);
+		const { id, cart, addToCart } = this.props;
 
+		const inCart = cart.findIndex(item => item.id === id) > -1;
+		
 		return (
 			<AddButtonStyled 
-				className={`${this.props.inCart ? 'listItem__addButton listItem__addButton--active' : 'listItem__addButton'}`} 
-				onClick={() => this.props.addToCart(this.props.id)}
+				className={`${inCart ? 'listItem__addButton listItem__addButton--active' : 'listItem__addButton'}`} 
+				onClick={() => addToCart(id)}
 			>
-				{this.props.inCart ? 'Added' : 'Add to Cart'}
+				{inCart ? 'Added' : 'Add to Cart'}
 			</AddButtonStyled>
 		)
 	}
 }
 
-export default AddButton;
+export default connect (
+	state => ({
+		cart: state.cart,
+	}), {
+		addToCart,
+	}
+)(AddButton);

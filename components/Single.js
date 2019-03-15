@@ -1,20 +1,21 @@
 import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
-
+import { connect } from 'react-redux';
 import SingleItem from './SingleItem';
-import List from './List';
+import ListItem from './ListItem';
 
 class Single extends React.Component {
 	render() {
-		const pokemon = this.props.pokemons.find(p => p.name === this.props.match.params.name);
-		const inCart = this.props.cart.some(item => item.name === pokemon.name);
-
+		// match is router
+		const { pokemons, match } = this.props;
+		const pokemon = pokemons.find(p => p.name === match.params.name);
+		
 		let similarPokemons = [];
 		let similarTypes = null;
 		if(typeof pokemon !== 'undefined') {
 			const types = pokemon.type.split(',');
 			types.forEach(type => {
-				similarPokemons.push( ...this.props.pokemons.filter(p => p.type.indexOf(type) > -1 && p.name !== pokemon.name) );
+				similarPokemons.push( ...pokemons.filter(p => p.type.indexOf(type) > -1 && p.name !== pokemon.name) );
 			});
 
 			similarTypes = types.map(type => <span key={type}>
@@ -29,7 +30,7 @@ class Single extends React.Component {
 
 					<Redirect to={{
 						pathname: "/notmatched",
-						state: {referrer: this.props.match.params.name}
+						state: {referrer: match.params.name}
 					}} />
 
 				) : false }
@@ -37,7 +38,7 @@ class Single extends React.Component {
 
 				{ typeof pokemon !== 'undefined' ? (
 
-					<SingleItem pokemon={pokemon} inCart={inCart} addToCart={this.props.addToCart} />
+					<SingleItem pokemon={pokemon} />
 					
 				) : false }
 
@@ -50,7 +51,11 @@ class Single extends React.Component {
 							{similarTypes}
 						</h2>
 						
-						<List pokemons={similarPokemons} cart={this.props.cart} addToCart={this.props.addToCart} />
+						<div className="list">
+							{
+								similarPokemons.map(similar => <ListItem key={similar.id} details={similar} />)
+							}
+						</div>
 					</div>
 
 				) : false }
@@ -60,4 +65,8 @@ class Single extends React.Component {
 	}
 }
 
-export default Single;
+export default connect (
+	state => ({
+		pokemons: state.pokemons,
+	})
+)(Single);

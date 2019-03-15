@@ -2,26 +2,17 @@ const ui = (
 	state = { 
 		cartOpened: false,
 		filterType: 'any',
-		filterText: ''
+		filterName: ''
 	},
 	action
 ) => {
 	switch (action.type) {
 		case 'TOGGLE_CART':
-			return {
-				...state,
-				cartOpened: !state.cartOpened
-			};
+			return { ...state, cartOpened: !state.cartOpened };
 		case 'FILTER_BY_TYPE':
-			return {
-				...state,
-				filterType: action.bytype
-			}
-		case 'FILTER_BY_TEXT':
-			return {
-				...state,
-				filterText: action.bytext
-			}
+			return { ...state, filterType: action.bytype }
+		case 'FILTER_BY_NAME':
+			return { ...state, filterName: action.byname }
 		default:
 			return state;
 	}

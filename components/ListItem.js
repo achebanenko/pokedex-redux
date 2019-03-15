@@ -1,14 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
 import AddButton from './AddButton';
 
 class Item extends React.Component {
 
 	render() {
-		// const listItemClassName = this.props.inCart ? 'listItem listItem--added' : 'listItem';
-		
-		const pokemon = this.props.details;
+		// destructuring alias syntax
+		const { details: pokemon } = this.props;
 		
 		return (	
 			<div className={`${this.props.inCart ? 'listItem listItem--added' : 'listItem'}`} key={pokemon.id}>
@@ -24,7 +22,7 @@ class Item extends React.Component {
 					<div className="listItem__priceTxt">$40</div>
 				</div>
 				
-				<AddButton addToCart={this.props.addToCart} id={pokemon.id} inCart={this.props.inCart} />
+				<AddButton id={pokemon.id} />
 			</div>
 		)
 	}

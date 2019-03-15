@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-
 import AddButton from './AddButton';
 
 const SingleItemStyled = styled.div`
@@ -26,25 +25,21 @@ const SingleItemStyled = styled.div`
 	}
 `;
 
-class SingleItem extends React.Component {
-	render() {
-		const pokemon = this.props.pokemon;
-
-		return (
-			<SingleItemStyled>
-				<div className="image">
-					<img src={pokemon.image} alt={pokemon.name} />
-				</div>
-				<div className="info">
-					<h1>{pokemon.name}</h1>
-					<p>
-						Info
-					</p>
-					<AddButton addToCart={this.props.addToCart} id={pokemon.id} inCart={this.props.inCart} />
-				</div>
-			</SingleItemStyled>
-		)
-	}
-}
+const SingleItem = ({ pokemon }) => {
+	return (
+		<SingleItemStyled>
+			<div className="image">
+				<img src={pokemon.image} alt={pokemon.name} />
+			</div>
+			<div className="info">
+				<h1>{pokemon.name}</h1>
+				<p>
+					Info
+				</p>
+				<AddButton id={pokemon.id} />
+			</div>
+		</SingleItemStyled>
+	)
+};
 
 export default SingleItem;
